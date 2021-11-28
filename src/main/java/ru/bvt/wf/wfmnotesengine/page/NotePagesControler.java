@@ -18,9 +18,6 @@ public class NotePagesControler {
     @GetMapping(value = {"/nindex"})
     public String nlistPage(Model model) {
         model.addAttribute("keywords", "list notes");
-        IReactiveDataDriverContextVariable reactiveDataDrivenMode =
-                new ReactiveDataDriverContextVariable(noteRepository.findAll(), 1);
-        model.addAttribute("notes", reactiveDataDrivenMode);
         return "nindex";
     }
 
@@ -29,10 +26,6 @@ public class NotePagesControler {
         model.addAttribute("keywords", "edit note");
         model.addAttribute("add", false);
         model.addAttribute("idInModel", noteId);
-
-        IReactiveDataDriverContextVariable reactiveDataDrivenMode =
-                new ReactiveDataDriverContextVariable(noteRepository.findById(noteId).flux(), 1);
-        model.addAttribute("notesInModel", reactiveDataDrivenMode);
         return "nedit";
     }
 

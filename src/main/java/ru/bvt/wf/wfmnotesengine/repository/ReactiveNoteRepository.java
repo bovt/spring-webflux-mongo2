@@ -9,12 +9,6 @@ import ru.bvt.wf.wfmnotesengine.domain.Note;
 @Repository
 public interface ReactiveNoteRepository extends ReactiveMongoRepository<Note, String> {
 
-    Flux<Note> findAll();
-
-    Mono<Note> findById(String id);
-
-    Mono<Note> save(Note note);
-
     Flux<Note> findAllByText(String text);
 
 }

@@ -28,7 +28,6 @@
     <tr>
         <th>Id</th>
         <th>Text</th>
-        <th>Author</th>
         <th>Edit</th>
         <th>Delete</th>
     </tr>
@@ -51,7 +50,6 @@
                     <tr>
                         <td>${note.id}</td>
                         <td>${note.text}</td>
-                        <td>${note.author}</td>
                         <td><a href="/nedit/${note.id}">Edit</a></td>
                         <td><input type="button" value="Del" onclick="deleteNote('${note.id}')"></td>
                     </tr>                `)

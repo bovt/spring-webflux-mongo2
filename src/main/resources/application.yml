@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+      database: company
+
+server:
+  port: 8084

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="keywords" th:content="${keywords}"/>
+    <title>Note index</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        .notes, .notes td {
+            border: 1px solid lightgray;
+            padding: 5px;
+        }
+    </style>
+    <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+
+<h1>Notes:</h1>
+
+<a th:href="@{/nadd}">Add Note</a> |
+<a th:href="@{/index}">Back to Index</a>
+
+<table class="notes">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Text</th>
+        <th>Author</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<h1>Links:</h1>
+<br><a href="/cindex/">Categories index</a>
+<br><a href="/swagger-ui/">Swagger UI</a>
+<script>
+    $(function () {
+        loadNotes();
+    });
+
+    function loadNotes() {
+        $.get('/flux/note').done(function (notes) {
+            notes.forEach(function (note) {
+                $('tbody').append(`
+                    <tr>
+                        <td>${note.id}</td>
+                        <td>${note.text}</td>
+                        <td>${note.author}</td>
+                        <td><a href="/nedit/${note.id}">Edit</a></td>
+                        <td><input type="button" value="Del" onclick="deleteNote('${note.id}')"></td>
+                    </tr>                `)
+            });
+        })
+    };
+
+    function deleteNote(idInScript) {
+        $.ajax({
+            type: 'DELETE',
+            url: '/flux/note/' + idInScript,
+        }).done(function (msg) {
+            console.log('SUCCESS');
+            $('tbody').html('');
+            loadNotes();
+        }).fail(function (xhr, ajaxOptions, thrownError) {
+            alert('Status='+xhr.status+' ErrorDesc='+thrownError);
+            console.log('FAIL');
+        }).always(function (msg) {
+            console.log('ALWAYS');
+        });
+    };
+
+</script>
+
+</body>
+</html>

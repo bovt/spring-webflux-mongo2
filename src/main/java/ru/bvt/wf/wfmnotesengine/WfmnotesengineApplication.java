@@ -13,10 +13,6 @@ public class WfmnotesengineApplication {
 
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(WfmnotesengineApplication.class, args);
-        Category category = new Category("Cat");
-        ReactiveCategoryRepository categoryReactiveRepository = context.getBean(ReactiveCategoryRepository.class);
-        categoryReactiveRepository.save(category).subscribe(c -> System.out.println(c.getName()));;
-
     }
 
 }

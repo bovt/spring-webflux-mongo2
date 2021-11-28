@@ -18,7 +18,16 @@
 </head>
 
 <body>
-<script>
+<script th:inline="javascript">
+    $(function () {
+        if (![[${add}]]) {
+            $.get('/flux/note/#idInModel').done(function (note) {
+                document.getElementById("note-text").setAttribute('value', note[0].text);
+            });
+        }
+        ;
+    });
+
     function getFormData($form) {
         var unindexed_array = $form.serializeArray();
         var indexed_array = {};
@@ -28,7 +37,7 @@
         });
 
         return indexed_array;
-    }
+    };
 
     function updateForm() {
         var $form = $("#note-form");
@@ -44,7 +53,7 @@
             console.log('SUCCESS');
             window.location.href = '/nindex';
         }).fail(function (xhr, ajaxOptions, thrownError) {
-            alert('Status='+xhr.status+' ErrorDesc='+thrownError);
+            alert('Status=' + xhr.status + ' ErrorDesc=' + thrownError);
             console.log('FAIL');
         }).always(function (msg) {
             console.log('ALWAYS');
@@ -66,7 +75,7 @@
             console.log('SUCCESS');
             window.location.href = '/nindex';
         }).fail(function (xhr, ajaxOptions, thrownError) {
-            alert('Status='+xhr.status+' ErrorDesc='+thrownError);
+            alert('Status=' + xhr.status + ' ErrorDesc=' + thrownError);
             console.log('FAIL');
         }).always(function (msg) {
             console.log('ALWAYS');
@@ -93,10 +102,10 @@
             <td>:</td>
             <td th:switch="${add}">
                 <div th:case="true"><input type="text" name="text" value="Sample note text"/></div>
-                <div th:case="false" th:each="n : ${notesInModel}"><input type="text" name="text" th:value="${n.text}"/>
-                </div>
+                <div th:case="false"><input type="text" name="text" id="note-text" value='smth'/></div>
             </td>
         </tr>
+        <tbody></tbody>
     </table>
     <input id="submit-new-note" type="button" th:value="${add} ? 'CREATE' : 'UPDATE'"
            th:onclick="${add} ? 'addForm()' : 'updateForm()'"></input>
@@ -110,7 +119,6 @@
 <br><a href="/nindex/">Notes index</a>
 <br><a href="/cindex/">Categories index</a>
 <br><a href="/swagger-ui/">Swagger UI</a>
-
 
 </body>
 </html>

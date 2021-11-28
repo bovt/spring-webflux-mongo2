@@ -1,8 +1,6 @@
 package ru.bvt.wf.wfmnotesengine.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
 
@@ -22,11 +20,10 @@ public class Note {
 
     private String author;
 
-    private Map<String, String> categories;
+    private Category category;
 
     public Note(String text) {
         this.text = text;
-        categories = new HashMap<String, String>();
     }
 
     @Override
